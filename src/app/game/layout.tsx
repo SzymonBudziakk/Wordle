@@ -19,7 +19,7 @@ export default function RootLayout({
     <html lang='en'>
       <body className={inter.className}>
         {children}
-        <Toaster position='top-right' />
+        <Toaster position='top-left' />
       </body>
     </html>
   )

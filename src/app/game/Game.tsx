@@ -42,13 +42,16 @@ export default function Game({
     } else if (event.key === 'Enter' && currWord.length === maxWordLength) {
       guessVerification(currWord)
 
-      toast.error('XXDD')
+      toast.error('Word pushed?')
 
       const newRows = [...rows]
       newRows[currRowId] = currWord
       setRows(newRows)
       setCurrWord('')
       setCurrRowId((prev) => prev + 1)
+    } else if (event.key === 'Enter') {
+      // is working?
+      toast.error('Not enough letters')
     }
   }
 
