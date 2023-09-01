@@ -1,7 +1,6 @@
 import Game from './Game'
 import supabase from '../../../database/supabase'
 import { revalidatePath } from 'next/cache'
-import { words } from '../../../words'
 
 export interface letterStatusProps {
   used: string[]
@@ -40,14 +39,34 @@ export default function GameWrapper() {
 
   const guessVerification = async (guess: string) => {
     'use server'
-    let currIndex = 0
+    const status: {
+      victory: boolean
+      wordExists: boolean
+      error?: unknown
+    } = { victory: false, wordExists: true }
+
+    try {
+      const { data } = await supabase
+        .from('words')
+        .select('word')
+        .eq('word', guess)
+      // [] null ???
+      if (data?.length === 0 || data === null) {
+        status.wordExists = false
+        return status
+      }
+    } catch (error: unknown) {
+      status.error = error
+      return status
+    }
+
+    let currIndex: number
     for (let i = 0; i < 6; i++) {
       if (tileStatus[i][0] === 'default') {
         currIndex = i
         break
       }
     }
-
     guess.split('').forEach((letter, id) => {
       if (letter === solution[id]) {
         letterStatus.confirmed.push(letter)
@@ -60,28 +79,11 @@ export default function GameWrapper() {
         tileStatus[currIndex][id] = 'used'
       }
     })
-
     revalidatePath('/game')
-  }
-
-  const addAllWords = async () => {
-    'use server'
-
-    let allWords: { word: string }[] = []
-
-    words.forEach((element) => {
-      if (element.length === 5) {
-        allWords.push({ word: element.toUpperCase() })
-      }
-    })
-
-    try {
-      const { data } = await supabase.from('words').insert(allWords).select()
-    } catch (error: unknown) {
-      return error
+    if (guess === solution) {
+      status.victory = true
     }
-
-    revalidatePath('/game')
+    return status
   }
 
   return (

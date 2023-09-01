@@ -4,11 +4,12 @@ import Row from '../_components/Row'
 import { useState, useEffect, createContext } from 'react'
 import { letterStatusProps } from './page'
 import { toast } from 'react-hot-toast'
+import { getErrorMessage } from '../_utils/getErrorMessage'
 
-// another component for context ??
+// ANOTHER COMPONENT FOR CONTEXT
 export const KeyboardContext = createContext({} as letterStatusProps)
 
-// delete solution
+// DELETE SOLUTION
 export default function Game({
   solution,
   letterStatus,
@@ -20,8 +21,13 @@ export default function Game({
   letterStatus: letterStatusProps
   tileStatus: string[][]
   setNewSolution: () => Promise<unknown>
-  guessVerification: (guess: string) => Promise<void>
+  guessVerification: (guess: string) => Promise<{
+    victory: boolean
+    wordExists: boolean
+    error?: unknown
+  }>
 }) {
+  // GLOBAL + MAX ROW AMOUNT?
   const maxWordLength = 5
   const [rows, setRows] = useState<(string | null)[]>(
     Array(6)
@@ -40,17 +46,29 @@ export default function Game({
     ) {
       setCurrWord((prev) => prev + event.key.toUpperCase())
     } else if (event.key === 'Enter' && currWord.length === maxWordLength) {
-      guessVerification(currWord)
-
-      toast.error('Word pushed?')
-
-      const newRows = [...rows]
-      newRows[currRowId] = currWord
-      setRows(newRows)
-      setCurrWord('')
-      setCurrRowId((prev) => prev + 1)
+      const verify = async () => {
+        const status = await guessVerification(currWord)
+        if (status.victory === true) {
+          // WINNING ACTION
+          toast('Congratulations! You guessed the word!')
+        } else if (status.wordExists === false) {
+          toast.error("Word doesn't exist")
+        } else if (status.error) {
+          toast.error(getErrorMessage(status.error))
+        } else if (currRowId === 5) {
+          // LOSING ACTION
+          toast.error('You lose the game!')
+        } else {
+          toast('Word passed!')
+          const newRows = [...rows]
+          newRows[currRowId] = currWord
+          setRows(newRows)
+          setCurrWord('')
+          setCurrRowId((prev) => prev + 1)
+        }
+      }
+      verify()
     } else if (event.key === 'Enter') {
-      // is working?
       toast.error('Not enough letters')
     }
   }
