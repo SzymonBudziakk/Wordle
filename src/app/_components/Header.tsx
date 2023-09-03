@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { HelpCircle } from 'lucide-react'
 
 export default function Header() {
-  const [isOpen, setIsOpen] = useState<boolean>(false)
+  const [isOpen, setIsOpen] = useState<boolean>(true)
 
   const toggleModal = (): void => {
     setIsOpen(!isOpen)
