@@ -94,11 +94,11 @@ export default function Game({
         })}
       </div>
       <h1 className='text-white text-3xl'>solution:{solution}</h1>
-      <button
+      {/* <button
         onClick={async () => await setNewSolution()}
         className='text-white text-3xl'>
         Set new solution
-      </button>
+      </button> */}
       <KeyboardContext.Provider value={letterStatus}>
         <Keyboard />
       </KeyboardContext.Provider>

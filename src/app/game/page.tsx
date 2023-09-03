@@ -50,7 +50,6 @@ export default function GameWrapper() {
         .from('words')
         .select('word')
         .eq('word', guess)
-      // [] null ???
       if (data?.length === 0 || data === null) {
         status.wordExists = false
         return status
