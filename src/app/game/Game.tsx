@@ -48,10 +48,10 @@ export default function Game({
     } else if (event.key === 'Enter' && currWord.length === maxWordLength) {
       const verify = async () => {
         const status = await guessVerification(currWord)
-        if (status.victory === true) {
+        if (status.victory) {
           // WINNING ACTION
           toast('Congratulations! You guessed the word!')
-        } else if (status.wordExists === false) {
+        } else if (!status.wordExists) {
           toast.error("Word doesn't exist")
         } else if (status.error) {
           toast.error(getErrorMessage(status.error))
@@ -102,7 +102,7 @@ export default function Game({
       <KeyboardContext.Provider value={letterStatus}>
         <Keyboard />
       </KeyboardContext.Provider>
-      <div className='bg-primary fixed top-0 -z-10 w-full h-[100vh]'></div>
+      <div className='bg-white dark:bg-primary fixed top-0 -z-10 w-full h-[100vh]'></div>
     </div>
   )
 }
