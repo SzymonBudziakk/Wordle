@@ -2,7 +2,7 @@
 import DarkModeToggle from './DarkModeToggle'
 import Modal from './Modal'
 import { useState } from 'react'
-import { HelpCircle } from 'lucide-react'
+import { HelpCircle, Github } from 'lucide-react'
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -12,12 +12,15 @@ export default function Header() {
   }
 
   return (
-    <header className='w-full bg-gray-600 top-0'>
+    <header className='w-full bg-primary top-0'>
       <div className='flex items-center justify-center p-6 gap-5'>
         <button onClick={toggleModal}>
           <HelpCircle width={64} height={64} />
         </button>
         <DarkModeToggle />
+        <a href='https://github.com/SzymonBudziakk'>
+          <Github width={64} height={64} />
+        </a>
       </div>
       {isOpen && <Modal toggleModal={toggleModal} />}
     </header>

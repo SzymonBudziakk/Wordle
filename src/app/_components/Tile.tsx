@@ -7,7 +7,7 @@ export default function Tile({
 }) {
   return (
     <div
-      className={`bg-${color} box-border w-[60px] h-[60px] border-[3px] border-gray-700 text-white 
+      className={`bg-${color} box-border w-[60px] h-[60px] border-[3px] border-secondary
                 flex items-center justify-center font-bold text-3xl`}>
       {letter}
     </div>

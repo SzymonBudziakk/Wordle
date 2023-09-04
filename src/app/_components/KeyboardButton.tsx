@@ -11,7 +11,7 @@ export default function KeyboardButton({ text }: { text: string }) {
   return (
     <button
       className={twMerge(
-        'text-white py-4 rounded-md text-xl font-medium flex justify-center items-center',
+        'py-4 rounded-md text-xl font-medium flex justify-center items-center border-2 border-secondary',
         text.length === 1 ? 'w-12' : 'w-[70px]',
         letterStatus.confirmed.includes(text)
           ? 'bg-confirmed'
@@ -19,7 +19,7 @@ export default function KeyboardButton({ text }: { text: string }) {
           ? 'bg-noticed'
           : letterStatus.used.includes(text)
           ? 'bg-used'
-          : 'bg-default'
+          : 'bg-primary'
       )}
       onClick={() => window.dispatchEvent(event)}>
       {text.length === 1 ? (

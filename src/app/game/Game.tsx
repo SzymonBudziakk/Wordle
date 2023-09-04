@@ -80,7 +80,7 @@ export default function Game({
   })
 
   return (
-    <div className='flex flex-col justify-center items-center gap-10 mt-16'>
+    <div className='flex flex-col justify-center items-center gap-10 mt-16 text-textColor'>
       <div className='flex flex-col gap-2'>
         {rows.map((element, id) => {
           return (
@@ -93,7 +93,7 @@ export default function Game({
           )
         })}
       </div>
-      <h1 className='text-white text-3xl'>solution:{solution}</h1>
+      {/* <h1 className='text-white text-3xl'>solution:{solution}</h1> */}
       {/* <button
         onClick={async () => await setNewSolution()}
         className='text-white text-3xl'>

@@ -6,15 +6,16 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: '#0C090A',
-        default: '#818384',
-        used: '#3A3A3C',
-        noticed: '#B59F3B',
-        confirmed: '#538D4E',
+        primary: '#423e37',
+        secondary: '#6e675f',
+        used: '#a39594',
+        noticed: '#93783a',
+        confirmed: '#e3b23c',
+        textColor: '#edebd7',
       },
     },
   },
-  safelist: ['bg-confirmed', 'bg-noticed'],
+  safelist: ['bg-confirmed', 'bg-noticed', 'bg-textColor'],
   plugins: [],
 }
 export default config
