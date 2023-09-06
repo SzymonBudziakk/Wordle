@@ -3,9 +3,11 @@ import Tile from './Tile'
 export default function Row({
   letters,
   tileStatus,
+  tileStyle,
 }: {
   letters: string | null
   tileStatus: string[]
+  tileStyle?: string
 }) {
   if (letters === null) letters = ''
   return (
@@ -14,7 +16,14 @@ export default function Row({
         .padEnd(5)
         .split('')
         .map((element, id) => {
-          return <Tile key={id} letter={element} color={tileStatus[id]} />
+          return (
+            <Tile
+              key={id}
+              letter={element}
+              color={tileStatus[id]}
+              style={tileStyle}
+            />
+          )
         })}
     </div>
   )
