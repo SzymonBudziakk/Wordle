@@ -88,7 +88,6 @@ export default function Game({
               <Row
                 key={id}
                 letters={currRowId === id ? currWord : element}
-                maxWordLength={maxWordLength}
                 tileStatus={tileStatus[id]}
               />
             )
