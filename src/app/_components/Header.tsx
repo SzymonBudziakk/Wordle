@@ -5,14 +5,14 @@ import { useState } from 'react'
 import { HelpCircle, Github } from 'lucide-react'
 
 export default function Header() {
-  const [isOpen, setIsOpen] = useState<boolean>(false)
+  const [isOpen, setIsOpen] = useState<boolean>(true)
 
   const toggleModal = (): void => {
     setIsOpen(!isOpen)
   }
 
   return (
-    <header className='w-full bg-primary top-0'>
+    <header className='w-full bg-primary top-0 text-ui'>
       <div className='flex items-center justify-center p-6 gap-5'>
         <button onClick={toggleModal}>
           <HelpCircle width={64} height={64} />

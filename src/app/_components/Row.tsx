@@ -11,7 +11,7 @@ export default function Row({
 }) {
   if (letters === null) letters = ' '.repeat(maxWordLength)
   return (
-    <div className='flex gap-2'>
+    <div className='flex gap-1 sm:gap-2'>
       {letters
         .padEnd(maxWordLength)
         .split('')

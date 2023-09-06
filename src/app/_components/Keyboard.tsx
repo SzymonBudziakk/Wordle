@@ -8,9 +8,9 @@ const keyboardButtons: string[][] = [
 
 export default function Keyboard() {
   return (
-    <div className='flex flex-col gap-2 items-center'>
+    <div className='fixed xl:static bottom-0 pb-[3.5rem] xl:p-0 flex flex-col gap-[2px] items-center w-full xl:w-auto bg-primary'>
       {keyboardButtons.map((element, id) => {
-        return <KeyboardLine key={id} letters={element} />
+        return <KeyboardLine key={id} letters={element} odd={id === 1} />
       })}
     </div>
   )

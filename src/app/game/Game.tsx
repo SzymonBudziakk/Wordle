@@ -80,29 +80,32 @@ export default function Game({
   })
 
   return (
-    <div className='flex flex-col justify-center items-center gap-10 mt-16 text-textColor'>
-      <div className='flex flex-col gap-2'>
-        {rows.map((element, id) => {
-          return (
-            <Row
-              key={id}
-              letters={currRowId === id ? currWord : element}
-              maxWordLength={maxWordLength}
-              tileStatus={tileStatus[id]}
-            />
-          )
-        })}
-      </div>
-      {/* <h1 className='text-white text-3xl'>solution:{solution}</h1> */}
-      {/* <button
+    <>
+      <div className='flex flex-col xl:flex-row justify-center xl:justify-evenly items-center mt-16 text-textColor'>
+        <div className='flex flex-col gap-1 sm:gap-2'>
+          {rows.map((element, id) => {
+            return (
+              <Row
+                key={id}
+                letters={currRowId === id ? currWord : element}
+                maxWordLength={maxWordLength}
+                tileStatus={tileStatus[id]}
+              />
+            )
+          })}
+        </div>
+        <KeyboardContext.Provider value={letterStatus}>
+          <Keyboard />
+        </KeyboardContext.Provider>
+
+        {/* <h1 className='text-white text-3xl'>solution:{solution}</h1> */}
+        {/* <button
         onClick={async () => await setNewSolution()}
         className='text-white text-3xl'>
         Set new solution
       </button> */}
-      <KeyboardContext.Provider value={letterStatus}>
-        <Keyboard />
-      </KeyboardContext.Provider>
-      <div className='bg-white dark:bg-primary fixed top-0 -z-10 w-full h-[100vh]'></div>
-    </div>
+      </div>
+      <div className='bg-white dark:bg-primary absolute top-0 -z-10 w-full h-[150vh]'></div>
+    </>
   )
 }

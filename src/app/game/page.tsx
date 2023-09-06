@@ -13,7 +13,7 @@ const letterStatus: letterStatusProps = {
   confirmed: [],
 }
 const tileStatus: string[][] = Array.from({ length: 6 }, () =>
-  Array(5).fill('default')
+  Array(5).fill('primary')
 )
 let solution = 'PIZZA'
 
@@ -61,7 +61,7 @@ export default function GameWrapper() {
 
     let currIndex: number
     for (let i = 0; i < 6; i++) {
-      if (tileStatus[i][0] === 'default') {
+      if (tileStatus[i][0] === 'primary') {
         currIndex = i
         break
       }
@@ -75,7 +75,7 @@ export default function GameWrapper() {
         tileStatus[currIndex][id] = 'noticed'
       } else {
         letterStatus.used.push(letter)
-        tileStatus[currIndex][id] = 'used'
+        tileStatus[currIndex][id] = 'secondary'
       }
     })
     revalidatePath('/game')

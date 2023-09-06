@@ -8,7 +8,7 @@ const config: Config = {
       colors: {
         primary: '#423e37',
         secondary: '#6e675f',
-        used: '#a39594',
+        ui: '#a39594',
         noticed: '#93783a',
         confirmed: '#e3b23c',
         textColor: '#edebd7',
