@@ -1,6 +1,7 @@
 import Game from './Game'
 import supabase from '../../../database/supabase'
 import { revalidatePath } from 'next/cache'
+import KeyboardContextProvider from '../_hooks/KeyboardContextProvider'
 
 export interface letterStatusProps {
   used: string[]
@@ -12,6 +13,7 @@ const letterStatus: letterStatusProps = {
   noticed: [],
   confirmed: [],
 }
+
 const tileStatus: string[][] = Array.from({ length: 6 }, () =>
   Array(5).fill('primary')
 )
@@ -86,12 +88,13 @@ export default function GameWrapper() {
   }
 
   return (
-    <Game
-      solution={solution}
-      letterStatus={letterStatus}
-      tileStatus={tileStatus}
-      setNewSolution={setNewSolution}
-      guessVerification={guessVerification}
-    />
+    <KeyboardContextProvider value={letterStatus}>
+      <Game
+        solution={solution}
+        tileStatus={tileStatus}
+        setNewSolution={setNewSolution}
+        guessVerification={guessVerification}
+      />
+    </KeyboardContextProvider>
   )
 }

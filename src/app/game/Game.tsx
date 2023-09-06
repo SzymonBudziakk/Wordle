@@ -2,23 +2,17 @@
 import Keyboard from '../_components/Keyboard'
 import Row from '../_components/Row'
 import { useState, useEffect, createContext } from 'react'
-import { letterStatusProps } from './page'
 import { toast } from 'react-hot-toast'
 import { getErrorMessage } from '../_utils/getErrorMessage'
-
-// ANOTHER COMPONENT FOR CONTEXT
-export const KeyboardContext = createContext({} as letterStatusProps)
 
 // DELETE SOLUTION
 export default function Game({
   solution,
-  letterStatus,
   tileStatus,
   setNewSolution,
   guessVerification,
 }: {
   solution: string
-  letterStatus: letterStatusProps
   tileStatus: string[][]
   setNewSolution: () => Promise<unknown>
   guessVerification: (guess: string) => Promise<{
@@ -81,7 +75,9 @@ export default function Game({
 
   return (
     <>
-      <div className='flex flex-col xl:flex-row justify-center xl:justify-evenly items-center mt-16 text-textColor'>
+      <div
+        className='flex flex-col xl:flex-row justify-center xl:justify-evenly items-center 
+      mt-8 xl:mt-32 text-textColor bg-white dark:bg-primary'>
         <div className='flex flex-col gap-1 sm:gap-2'>
           {rows.map((element, id) => {
             return (
@@ -93,9 +89,7 @@ export default function Game({
             )
           })}
         </div>
-        <KeyboardContext.Provider value={letterStatus}>
-          <Keyboard />
-        </KeyboardContext.Provider>
+        <Keyboard />
 
         {/* <h1 className='text-white text-3xl'>solution:{solution}</h1> */}
         {/* <button
@@ -104,7 +98,6 @@ export default function Game({
         Set new solution
       </button> */}
       </div>
-      <div className='bg-white dark:bg-primary absolute top-0 -z-10 w-full h-[150vh]'></div>
     </>
   )
 }

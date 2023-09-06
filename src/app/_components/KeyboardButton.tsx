@@ -1,6 +1,6 @@
 import { CornerDownLeft, ArrowBigLeft } from 'lucide-react'
 import { twMerge } from 'tailwind-merge'
-import { KeyboardContext } from '../game/Game'
+import { KeyboardContext } from '../_hooks/KeyboardContextProvider'
 import { useContext } from 'react'
 
 export default function KeyboardButton({ text }: { text: string }) {
