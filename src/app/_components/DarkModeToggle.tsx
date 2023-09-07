@@ -12,6 +12,7 @@ export default function DarkModeToggle({ style }: { style: string }) {
     isDark
       ? document.documentElement.classList.add('dark')
       : document.documentElement.classList.remove('dark')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const toggleDarkMode = () => {

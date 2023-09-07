@@ -9,12 +9,12 @@ import { getErrorMessage } from '../_utils/getErrorMessage'
 export default function Game({
   solution,
   tileStatus,
-  setNewSolution,
+  setSolution,
   guessVerification,
 }: {
   solution: string
   tileStatus: string[][]
-  setNewSolution: () => Promise<unknown>
+  setSolution: () => Promise<unknown>
   guessVerification: (guess: string) => Promise<{
     victory: boolean
     wordExists: boolean
@@ -31,47 +31,50 @@ export default function Game({
   const [currRowId, setCurrRowId] = useState<number>(0)
   const [currWord, setCurrWord] = useState<string>('')
 
-  const handleKeyPress = (event: KeyboardEvent) => {
-    if (event.key === 'Backspace') {
-      setCurrWord((prev) => prev.slice(0, -1))
-    } else if (
-      currWord.length < maxWordLength &&
-      /^[a-zA-Z]$/.test(event.key)
-    ) {
-      setCurrWord((prev) => prev + event.key.toUpperCase())
-    } else if (event.key === 'Enter' && currWord.length === maxWordLength) {
-      const verify = async () => {
-        const status = await guessVerification(currWord)
-        if (status.victory) {
-          // WINNING ACTION
-          toast('Congratulations! You guessed the word!')
-        } else if (!status.wordExists) {
-          toast.error("Word doesn't exist")
-        } else if (status.error) {
-          toast.error(getErrorMessage(status.error))
-        } else if (currRowId === 5) {
-          // LOSING ACTION
-          toast.error('You lose the game!')
-        } else {
-          toast('Word passed!')
-          const newRows = [...rows]
-          newRows[currRowId] = currWord
-          setRows(newRows)
-          setCurrWord('')
-          setCurrRowId((prev) => prev + 1)
-        }
-      }
-      verify()
-    } else if (event.key === 'Enter') {
-      toast.error('Not enough letters')
-    }
-  }
+  useEffect(() => {
+    setSolution()
+  }, [])
 
   useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (event.key === 'Backspace') {
+        setCurrWord((prev) => prev.slice(0, -1))
+      } else if (
+        currWord.length < maxWordLength &&
+        /^[a-zA-Z]$/.test(event.key)
+      ) {
+        setCurrWord((prev) => prev + event.key.toUpperCase())
+      } else if (event.key === 'Enter' && currWord.length === maxWordLength) {
+        const verify = async () => {
+          const status = await guessVerification(currWord)
+          if (status.victory) {
+            // WINNING ACTION
+            toast('Congratulations! You guessed the word!')
+          } else if (!status.wordExists) {
+            toast.error("Word doesn't exist")
+          } else if (status.error) {
+            toast.error(getErrorMessage(status.error))
+          } else if (currRowId === 5) {
+            // LOSING ACTION
+            toast.error('You lose the game!')
+          } else {
+            toast('Word passed!')
+            const newRows = [...rows]
+            newRows[currRowId] = currWord
+            setRows(newRows)
+            setCurrWord('')
+            setCurrRowId((prev) => prev + 1)
+          }
+        }
+        verify()
+      } else if (event.key === 'Enter') {
+        toast.error('Not enough letters')
+      }
+    }
     window.addEventListener('keydown', handleKeyPress)
 
     return () => window.removeEventListener('keydown', handleKeyPress)
-  })
+  }, [currWord])
 
   return (
     <>
@@ -91,9 +94,9 @@ export default function Game({
         </div>
         <Keyboard />
 
-        {/* <h1 className='text-white text-3xl'>solution:{solution}</h1> */}
+        <h1 className='text-white text-3xl'>solution:{solution}</h1>
         {/* <button
-        onClick={async () => await setNewSolution()}
+        onClick={async () => await setSolution()}
         className='text-white text-3xl'>
         Set new solution
       </button> */}

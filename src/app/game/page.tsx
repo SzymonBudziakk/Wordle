@@ -17,13 +17,23 @@ const letterStatus: letterStatusProps = {
 const tileStatus: string[][] = Array.from({ length: 6 }, () =>
   Array(5).fill('primary')
 )
-let solution = 'PIZZA'
+let solution: string
 
 export default function GameWrapper() {
-  const setNewSolution = async () => {
+  const setSolution = async () => {
     'use server'
-    const numberOfWords = 8885
-    const randomIndex = Math.floor(Math.random() * numberOfWords) + 1
+    const generateNumber = (): number => {
+      const currDate = new Date()
+      const numberOfWords = 8885
+      const baseNumber =
+        currDate.getFullYear() *
+        currDate.getMonth() *
+        currDate.getDate() *
+        currDate.getDay()
+
+      return (baseNumber % numberOfWords) + 1
+    }
+    const randomIndex = generateNumber()
 
     try {
       const { data, error } = await supabase
@@ -35,7 +45,6 @@ export default function GameWrapper() {
       return error
     }
 
-    // revalidateTag ??
     revalidatePath('/game')
   }
 
@@ -87,12 +96,14 @@ export default function GameWrapper() {
     return status
   }
 
+  // setSolution()
+
   return (
     <KeyboardContextProvider value={letterStatus}>
       <Game
         solution={solution}
         tileStatus={tileStatus}
-        setNewSolution={setNewSolution}
+        setSolution={setSolution}
         guessVerification={guessVerification}
       />
     </KeyboardContextProvider>
