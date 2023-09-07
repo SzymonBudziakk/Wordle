@@ -1,4 +1,5 @@
 import Tile from './Tile'
+import { maxWordLength } from '../game/Game'
 
 export default function Row({
   letters,
@@ -13,7 +14,7 @@ export default function Row({
   return (
     <div className='flex gap-1 sm:gap-2'>
       {letters
-        .padEnd(5)
+        .padEnd(maxWordLength)
         .split('')
         .map((element, id) => {
           return (

@@ -1,24 +1,25 @@
 import Row from './Row'
+import { maxWordLength } from '../game/Game'
 
 const rulesData = [
   {
     text: 'You guessed the letter and its correct position:',
     letters: 'CHART',
-    tileStatus: Array(5)
+    tileStatus: Array(maxWordLength)
       .fill('')
       .map((e, id) => (id === 2 ? 'confirmed' : 'primary')),
   },
   {
     text: 'You guessed the letter, but it appears in a different position:',
     letters: 'PINKY',
-    tileStatus: Array(5)
+    tileStatus: Array(maxWordLength)
       .fill('')
       .map((e, id) => (id === 0 ? 'noticed' : 'primary')),
   },
   {
     text: 'The given letter does not appear in the word:',
     letters: 'TOAST',
-    tileStatus: Array(5)
+    tileStatus: Array(maxWordLength)
       .fill('')
       .map((e, id) => (id === 3 ? 'secondary' : 'primary')),
   },

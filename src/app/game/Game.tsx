@@ -1,11 +1,12 @@
 'use client'
 import Keyboard from '../_components/Keyboard'
 import Row from '../_components/Row'
-import { useState, useEffect, createContext } from 'react'
+import { useState, useEffect } from 'react'
 import { toast } from 'react-hot-toast'
 import { getErrorMessage } from '../_utils/getErrorMessage'
 
-// DELETE SOLUTION
+export const maxWordLength = 5
+
 export default function Game({
   solution,
   tileStatus,
@@ -21,8 +22,6 @@ export default function Game({
     error?: unknown
   }>
 }) {
-  // GLOBAL + MAX ROW AMOUNT?
-  const maxWordLength = 5
   const [rows, setRows] = useState<(string | null)[]>(
     Array(6)
       .fill(null)
@@ -80,7 +79,7 @@ export default function Game({
     <>
       <div
         className='flex flex-col xl:flex-row justify-center xl:justify-evenly items-center 
-      mt-8 xl:mt-32 text-textColor bg-white dark:bg-primary'>
+                  mt-8 xl:mt-32 text-textColor bg-white dark:bg-primary'>
         <div className='flex flex-col gap-1 sm:gap-2'>
           {rows.map((element, id) => {
             return (
@@ -93,13 +92,7 @@ export default function Game({
           })}
         </div>
         <Keyboard />
-
         <h1 className='text-white text-3xl'>solution:{solution}</h1>
-        {/* <button
-        onClick={async () => await setSolution()}
-        className='text-white text-3xl'>
-        Set new solution
-      </button> */}
       </div>
     </>
   )
