@@ -1,7 +1,7 @@
 import { Sun, Moon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
-export default function DarkModeToggle() {
+export default function DarkModeToggle({ style }: { style: string }) {
   const [isDark, setIsDark] = useState<boolean>(
     localStorage.theme === 'dark' ||
       (!('theme' in localStorage) &&
@@ -27,11 +27,7 @@ export default function DarkModeToggle() {
 
   return (
     <button onClick={toggleDarkMode}>
-      {isDark ? (
-        <Sun width={64} height={64} />
-      ) : (
-        <Moon width={64} height={64} />
-      )}
+      {isDark ? <Sun className={style} /> : <Moon className={style} />}
     </button>
   )
 }
