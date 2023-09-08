@@ -20,7 +20,7 @@ export default function RootLayout({
     <div className='bg-white dark:bg-primary absolute top-0 -z-10 w-full h-[100vh]'>
       <Header />
       {children}
-      <Toaster position='top-left' />
+      <Toaster position='top-center' />
     </div>
   )
 }

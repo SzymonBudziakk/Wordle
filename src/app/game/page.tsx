@@ -96,8 +96,6 @@ export default function GameWrapper() {
     return status
   }
 
-  // setSolution()
-
   return (
     <KeyboardContextProvider value={letterStatus}>
       <Game

@@ -30,9 +30,40 @@ export default function Game({
   const [currRowId, setCurrRowId] = useState<number>(0)
   const [currWord, setCurrWord] = useState<string>('')
 
-  useEffect(() => {
-    setSolution()
-  }, [])
+  // // CZYTANIE LOCAL STORAGE I USTAWIANIE USESTATE
+  // useEffect(() => {
+  //   setSolution()
+
+  //   console.log('Reading local storage!')
+
+  //   const currDate = new Date()
+  //   const day = localStorage.getItem('day')
+  //   if (!day) {
+  //     localStorage.setItem('day', JSON.stringify(currDate.getDay()))
+  //     console.log('New day has been set!')
+  //   }
+
+  //   if (day && JSON.parse(day) === currDate.getDay()) {
+  //     const latestRows = localStorage.getItem('rows')
+  //     const latestRowId = localStorage.getItem('rowId')
+  //     if (latestRows && latestRowId) {
+  //       console.log('Rows have been set with useState!')
+  //       setRows(JSON.parse(latestRows))
+  //       setCurrRowId(JSON.parse(latestRowId))
+  //     }
+  //   } else {
+  //   }
+  // }, [])
+
+  // // USTAWIANIE W LOCAL STORAGE
+  // useEffect(() => {
+  //   const newRows = [...rows]
+  //   newRows[currRowId] = currWord.padEnd(maxWordLength)
+  //   localStorage.setItem('rows', JSON.stringify(newRows))
+  //   localStorage.setItem('rowId', JSON.stringify(currRowId))
+
+  //   console.log('Rows have been set in local storage!')
+  // }, [rows])
 
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
