@@ -1,7 +1,7 @@
 'use client'
 import Keyboard from '../_components/Keyboard'
 import Row from '../_components/Row'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { toast } from 'react-hot-toast'
 import { getErrorMessage } from '../_utils/getErrorMessage'
 
@@ -30,40 +30,44 @@ export default function Game({
   const [currRowId, setCurrRowId] = useState<number>(0)
   const [currWord, setCurrWord] = useState<string>('')
 
-  // // CZYTANIE LOCAL STORAGE I USTAWIANIE USESTATE
-  // useEffect(() => {
-  //   setSolution()
+  useEffect(() => {
+    setSolution()
 
-  //   console.log('Reading local storage!')
+    const currDate = new Date()
+    const day = localStorage.getItem('day')
 
-  //   const currDate = new Date()
-  //   const day = localStorage.getItem('day')
-  //   if (!day) {
-  //     localStorage.setItem('day', JSON.stringify(currDate.getDay()))
-  //     console.log('New day has been set!')
-  //   }
+    if (!day) {
+      localStorage.setItem('day', JSON.stringify(currDate.getDay()))
+    } else {
+      if (JSON.parse(day) === currDate.getDay()) {
+        const stringyfiedGameInfo = localStorage.getItem('gameInfo')
+        if (stringyfiedGameInfo) {
+          const gameInfo = JSON.parse(stringyfiedGameInfo)
+          setRows(gameInfo.rows)
+          setCurrRowId(gameInfo.rowId)
+          tileStatus = gameInfo.tileStatus
+        }
+      } else {
+        localStorage.setItem('day', day)
+      }
+    }
+  }, [])
 
-  //   if (day && JSON.parse(day) === currDate.getDay()) {
-  //     const latestRows = localStorage.getItem('rows')
-  //     const latestRowId = localStorage.getItem('rowId')
-  //     if (latestRows && latestRowId) {
-  //       console.log('Rows have been set with useState!')
-  //       setRows(JSON.parse(latestRows))
-  //       setCurrRowId(JSON.parse(latestRowId))
-  //     }
-  //   } else {
-  //   }
-  // }, [])
+  useEffect(() => {
+    const newRows = [...rows]
+    newRows[currRowId] = currWord.padEnd(maxWordLength)
 
-  // // USTAWIANIE W LOCAL STORAGE
-  // useEffect(() => {
-  //   const newRows = [...rows]
-  //   newRows[currRowId] = currWord.padEnd(maxWordLength)
-  //   localStorage.setItem('rows', JSON.stringify(newRows))
-  //   localStorage.setItem('rowId', JSON.stringify(currRowId))
-
-  //   console.log('Rows have been set in local storage!')
-  // }, [rows])
+    const gameInfo: {
+      rows: (string | null)[]
+      rowId: number
+      tileStatus: string[][]
+    } = {
+      rows: newRows,
+      rowId: currRowId,
+      tileStatus: tileStatus,
+    }
+    localStorage.setItem('gameInfo', JSON.stringify(gameInfo))
+  }, [rows, tileStatus])
 
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
