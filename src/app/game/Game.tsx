@@ -36,20 +36,16 @@ export default function Game({
     const currDate = new Date()
     const day = localStorage.getItem('day')
 
-    if (!day) {
-      localStorage.setItem('day', JSON.stringify(currDate.getDay()))
-    } else {
-      if (JSON.parse(day) === currDate.getDay()) {
-        const stringyfiedGameInfo = localStorage.getItem('gameInfo')
-        if (stringyfiedGameInfo) {
-          const gameInfo = JSON.parse(stringyfiedGameInfo)
-          setRows(gameInfo.rows)
-          setCurrRowId(gameInfo.rowId)
-          tileStatus = gameInfo.tileStatus
-        }
-      } else {
-        localStorage.setItem('day', day)
+    if (day && JSON.parse(day) === currDate.getDay()) {
+      const stringyfiedGameInfo = localStorage.getItem('gameInfo')
+      if (stringyfiedGameInfo) {
+        const gameInfo = JSON.parse(stringyfiedGameInfo)
+        setRows(gameInfo.rows)
+        setCurrRowId(gameInfo.rowId)
+        tileStatus = gameInfo.tileStatus
       }
+    } else {
+      localStorage.setItem('day', JSON.stringify(currDate.getDay()))
     }
   }, [])
 
@@ -127,7 +123,7 @@ export default function Game({
           })}
         </div>
         <Keyboard />
-        <h1 className='text-white text-3xl'>solution:{solution}</h1>
+        {/* <h1 className='text-white text-3xl'>solution:{solution}</h1> */}
       </div>
     </>
   )
