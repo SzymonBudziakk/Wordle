@@ -1,6 +1,6 @@
 'use client'
 import { createContext, ReactNode } from 'react'
-import { letterStatusProps } from '../game/page'
+import { letterStatusProps } from '../page'
 
 export const KeyboardContext = createContext({} as letterStatusProps)
 

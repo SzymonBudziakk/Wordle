@@ -1,5 +1,5 @@
 import Tile from './Tile'
-import { maxWordLength } from '../game/Game'
+import { maxWordLength } from '../Game'
 
 export default function Row({
   letters,

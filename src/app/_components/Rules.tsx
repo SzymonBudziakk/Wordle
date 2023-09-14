@@ -1,5 +1,5 @@
 import Row from './Row'
-import { maxWordLength } from '../game/Game'
+import { maxWordLength } from '../Game'
 
 const rulesData = [
   {

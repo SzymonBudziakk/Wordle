@@ -1,9 +1,9 @@
 'use client'
-import Keyboard from '../_components/Keyboard'
-import Row from '../_components/Row'
-import { useState, useEffect, useRef } from 'react'
+import Keyboard from './_components/Keyboard'
+import Row from './_components/Row'
+import { useState, useEffect } from 'react'
 import { toast } from 'react-hot-toast'
-import { getErrorMessage } from '../_utils/getErrorMessage'
+import { getErrorMessage } from './_utils/getErrorMessage'
 
 export const maxWordLength = 5
 
