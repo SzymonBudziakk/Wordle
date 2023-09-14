@@ -45,6 +45,9 @@ export default function Game({
         tileStatus = gameInfo.tileStatus
       }
     } else {
+      if (day) {
+        localStorage.removeItem('gameInfo')
+      }
       localStorage.setItem('day', JSON.stringify(currDate.getDay()))
     }
   }, [])

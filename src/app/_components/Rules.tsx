@@ -42,7 +42,7 @@ export default function Rules() {
       {rulesData.map((data, id) => {
         return (
           <div key={id} className='flex flex-col items-center'>
-            <h2 className='py-3 text-center'>{data.text}</h2>
+            <h2 className='py-3 text-center md:text-md'>{data.text}</h2>
             <Row
               letters={data.letters}
               tileStatus={data.tileStatus}

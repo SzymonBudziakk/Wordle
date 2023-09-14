@@ -18,8 +18,8 @@ export default function Header() {
   return (
     <>
       <header className='w-full bg-primary dark:bg-primaryDark top-0 text-textColor dark:text-textColorDark flex justify-center'>
-        <div className='flex items-center justify-center sm:justify-between p-6 w-[90%] border-b-2 border-textColor dark:border-textColorDark'>
-          <h1 className='text-3xl md:text-[2.25rem] font-bold hidden sm:block'>
+        <div className='flex items-center justify-center sm:justify-between p-6 w-[90%] border-b-[1px] border-textColor dark:border-textColorDark'>
+          <h1 className='text-3xl md:text-[2.25rem] font-semibold hidden sm:block'>
             Szymon Budziak
           </h1>
           <div className='flex items-center justify-center gap-3'>

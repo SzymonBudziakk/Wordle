@@ -11,7 +11,7 @@ export default function Modal({
   return (
     <>
       <div className='absolute top-0 w-full h-full flex items-center justify-center text-textColor dark:text-textColorDark text-justify'>
-        <div className='bg-primary dark:bg-primaryDark max-w-[600px] border-[1px] border-secondary dark:border-secondaryDark rounded-md z-10'>
+        <div className='bg-primary dark:bg-primaryDark max-w-[600px] border-[1px] border-secondary dark:border-secondaryDark rounded-md z-10 my-auto'>
           <button onClick={toggleModal} className='block ml-auto mr-3 mt-3'>
             <X width={32} height={32} />
           </button>
