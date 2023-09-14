@@ -11,15 +11,15 @@ export default function KeyboardButton({ text }: { text: string }) {
   return (
     <button
       className={twMerge(
-        'py-3 sm:py-4 rounded-md text-lg sm:text-xl font-medium flex justify-center items-center border-secondary',
+        'py-3 sm:py-4 rounded-md text-lg sm:text-xl font-medium flex justify-center items-center border-secondary dark:border-secondaryDark',
         text.length === 1 ? 'w-12 min-w-min' : 'w-[72px]',
         letterStatus.confirmed.includes(text)
-          ? 'bg-confirmed'
+          ? 'bg-confirmed dark:bg-confirmedDark'
           : letterStatus.noticed.includes(text)
-          ? 'bg-noticed'
+          ? 'bg-noticed dark:bg-noticedDark'
           : letterStatus.used.includes(text)
-          ? 'bg-secondary'
-          : 'bg-primary border-2'
+          ? 'bg-secondary dark:bg-secondaryDark'
+          : 'bg-primary dark:bg-primaryDark border-2'
       )}
       onClick={() => window.dispatchEvent(event)}>
       {text.length === 1 ? (
