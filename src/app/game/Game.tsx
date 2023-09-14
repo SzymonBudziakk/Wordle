@@ -109,7 +109,7 @@ export default function Game({
   return (
     <>
       <div
-        className='flex flex-col xl:flex-row justify-center xl:justify-evenly items-center 
+        className='flex flex-col xl:flex-row justify-center gap-8 xl:justify-evenly items-center 
                   mt-8 xl:mt-32 text-textColor dark:text-textColorDark bg-primary dark:bg-primaryDark'>
         <div className='flex flex-col gap-1 sm:gap-2'>
           {rows.map((element, id) => {
