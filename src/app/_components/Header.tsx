@@ -6,7 +6,9 @@ import { HelpCircle, Github } from 'lucide-react'
 import Rules from './Rules'
 
 export default function Header() {
-  const [isOpen, setIsOpen] = useState<boolean>(false)
+  const [isOpen, setIsOpen] = useState<boolean>(
+    localStorage.getItem('day') ? false : true
+  )
   const iconStyle = 'w-[48px] h-[48px] md:w-[64px] md:h-[64px]'
 
   const toggleRules = (): void => {
