@@ -24,13 +24,13 @@ export default function Header() {
           </h1>
           <div className='flex items-center justify-center gap-3'>
             <button onClick={toggleRules}>
-              <HelpCircle className={iconStyle} />
+              <HelpCircle className={iconStyle} strokeWidth='1.7px' />
             </button>
             <a
               href='https://github.com/SzymonBudziakk'
               target='_blank'
               title='See repository'>
-              <Github className={iconStyle} />
+              <Github className={iconStyle} strokeWidth='1.7px' />
             </a>
             <DarkModeToggle style={iconStyle} />
           </div>

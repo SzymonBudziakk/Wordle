@@ -12,7 +12,6 @@ export default function DarkModeToggle({ style }: { style: string }) {
     isDark
       ? document.documentElement.classList.add('dark')
       : document.documentElement.classList.remove('dark')
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const toggleDarkMode = () => {
@@ -28,7 +27,11 @@ export default function DarkModeToggle({ style }: { style: string }) {
 
   return (
     <button onClick={toggleDarkMode}>
-      {isDark ? <Sun className={style} /> : <Moon className={style} />}
+      {isDark ? (
+        <Sun className={style} strokeWidth='1.7px' />
+      ) : (
+        <Moon className={style} strokeWidth='1.7px' />
+      )}
     </button>
   )
 }
