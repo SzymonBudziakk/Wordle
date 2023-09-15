@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Wordle',
-  description: 'Wordle game by Szymon Budziak',
+  description: 'Wordle Game by Szymon Budziak',
   icons: {
     icon: 'https://cdn-icons-png.flaticon.com/512/3600/3600973.png',
     apple: 'https://cdn-icons-png.flaticon.com/512/3600/3600973.png',

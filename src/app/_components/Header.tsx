@@ -27,7 +27,7 @@ export default function Header() {
               <HelpCircle className={iconStyle} strokeWidth='1.7px' />
             </button>
             <a
-              href='https://github.com/SzymonBudziakk'
+              href='https://github.com/SzymonBudziakk/Wordle'
               target='_blank'
               title='See repository'>
               <Github className={iconStyle} strokeWidth='1.7px' />
