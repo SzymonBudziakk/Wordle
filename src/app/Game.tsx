@@ -83,33 +83,25 @@ export default function Game({
       } else if (event.key === 'Enter' && currWord.length === maxWordLength) {
         const verify = async () => {
           const status = await guessVerification(currWord)
-          if (status.victory) {
-            const newRows = [...rows]
-            newRows[currRowId] = currWord
-            setRows(newRows)
-            setCurrWord('')
-            setCurrRowId((prev) => prev + 1)
-            setGameStatus('victory')
-            toast('Congratulations! You guessed the word!')
-          } else if (!status.wordExists) {
+          if (!status.wordExists) {
             toast.error("Word doesn't exist")
           } else if (status.error) {
             toast.error(getErrorMessage(status.error))
-          } else if (currRowId === 5) {
-            const newRows = [...rows]
-            newRows[currRowId] = currWord
-            setRows(newRows)
-            setCurrWord('')
-            setCurrRowId((prev) => prev + 1)
-            setGameStatus('defeat')
-            toast.error(`You didn't guees the word... Come back tomorrow!`)
           } else {
             const newRows = [...rows]
             newRows[currRowId] = currWord
             setRows(newRows)
             setCurrWord('')
             setCurrRowId((prev) => prev + 1)
-            toast('Word passed!')
+            if (status.victory) {
+              setGameStatus('victory')
+              toast('Congratulations! You guessed the word!')
+            } else if (currRowId === 5) {
+              setGameStatus('defeat')
+              toast.error(`You didn't guees the word... Come back tomorrow!`)
+            } else {
+              toast('Word passed!')
+            }
           }
         }
         verify()

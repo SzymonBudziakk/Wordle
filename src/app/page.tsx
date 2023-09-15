@@ -99,7 +99,6 @@ export default function GameWrapper() {
   return (
     <KeyboardContextProvider value={letterStatus}>
       <Game
-        solution={solution}
         tileStatus={tileStatus}
         setSolution={setSolution}
         guessVerification={guessVerification}
