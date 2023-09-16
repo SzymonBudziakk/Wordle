@@ -51,6 +51,7 @@ export default function Game({
         setCurrRowId(gameInfo.rowId)
         setTileStatus(gameInfo.tileStatus)
         setGameStatus(gameInfo.gameStatus)
+        setLetterStatus(gameInfo.letterStatus)
       }
     } else {
       if (day) {
@@ -66,11 +67,13 @@ export default function Game({
       rowId: number
       tileStatus: string[][]
       gameStatus: string
+      letterStatus: letterStatusProps
     } = {
       rows: rows.slice(0, 6),
       rowId: currRowId,
       tileStatus: tileStatus,
       gameStatus: gameStatus,
+      letterStatus: letterStatus,
     }
     localStorage.setItem('gameInfo', JSON.stringify(gameInfo))
   }, [rows, tileStatus, gameStatus])
