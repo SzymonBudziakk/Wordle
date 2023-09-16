@@ -8,15 +8,15 @@ export interface letterStatusProps {
   noticed: string[]
   confirmed: string[]
 }
-const letterStatus: letterStatusProps = {
-  used: [],
-  noticed: [],
-  confirmed: [],
-}
 
 let solution: string
 
 export default function GameWrapper() {
+  const letterStatus: letterStatusProps = {
+    used: [],
+    noticed: [],
+    confirmed: [],
+  }
   const setSolution = async () => {
     'use server'
     const generateNumber = (): number => {
