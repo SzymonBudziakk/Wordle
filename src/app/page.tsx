@@ -14,9 +14,6 @@ const letterStatus: letterStatusProps = {
   confirmed: [],
 }
 
-const tileStatus: string[][] = Array.from({ length: 6 }, () =>
-  Array(5).fill('primary')
-)
 let solution: string
 
 export default function GameWrapper() {
@@ -48,13 +45,16 @@ export default function GameWrapper() {
     revalidatePath('/game')
   }
 
-  const guessVerification = async (guess: string) => {
+  const guessVerification = async (guess: string, tileStatus: string[][]) => {
     'use server'
+
+    const tempTileStatus = [...tileStatus]
     const status: {
       victory: boolean
       wordExists: boolean
+      tileStatus: string[][]
       error?: unknown
-    } = { victory: false, wordExists: true }
+    } = { victory: false, wordExists: true, tileStatus: tempTileStatus }
 
     try {
       const { data } = await supabase
@@ -72,7 +72,7 @@ export default function GameWrapper() {
 
     let currIndex: number
     for (let i = 0; i < 6; i++) {
-      if (tileStatus[i][0] === 'primary') {
+      if (tempTileStatus[i][0] === 'primary') {
         currIndex = i
         break
       }
@@ -80,13 +80,13 @@ export default function GameWrapper() {
     guess.split('').forEach((letter, id) => {
       if (letter === solution[id]) {
         letterStatus.confirmed.push(letter)
-        tileStatus[currIndex][id] = 'confirmed'
+        tempTileStatus[currIndex][id] = 'confirmed'
       } else if (solution.includes(letter)) {
         letterStatus.noticed.push(letter)
-        tileStatus[currIndex][id] = 'noticed'
+        tempTileStatus[currIndex][id] = 'noticed'
       } else {
         letterStatus.used.push(letter)
-        tileStatus[currIndex][id] = 'secondary'
+        tempTileStatus[currIndex][id] = 'secondary'
       }
     })
     revalidatePath('/game')
@@ -98,11 +98,7 @@ export default function GameWrapper() {
 
   return (
     <KeyboardContextProvider value={letterStatus}>
-      <Game
-        tileStatus={tileStatus}
-        setSolution={setSolution}
-        guessVerification={guessVerification}
-      />
+      <Game setSolution={setSolution} guessVerification={guessVerification} />
     </KeyboardContextProvider>
   )
 }

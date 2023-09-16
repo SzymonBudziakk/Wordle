@@ -8,15 +8,17 @@ import { getErrorMessage } from './_utils/getErrorMessage'
 export const maxWordLength = 5
 
 export default function Game({
-  tileStatus,
   setSolution,
   guessVerification,
 }: {
-  tileStatus: string[][]
   setSolution: () => Promise<unknown>
-  guessVerification: (guess: string) => Promise<{
+  guessVerification: (
+    guess: string,
+    tileStatus: string[][]
+  ) => Promise<{
     victory: boolean
     wordExists: boolean
+    tileStatus: string[][]
     error?: unknown
   }>
 }) {
@@ -24,6 +26,9 @@ export default function Game({
     Array(6)
       .fill(null)
       .map((e, id) => (id === 0 ? '' : null))
+  )
+  const [tileStatus, setTileStatus] = useState<string[][]>(
+    Array.from({ length: 6 }, () => Array(5).fill('primary'))
   )
   const [currRowId, setCurrRowId] = useState<number>(0)
   const [currWord, setCurrWord] = useState<string>('')
@@ -41,7 +46,7 @@ export default function Game({
         const gameInfo = JSON.parse(stringyfiedGameInfo)
         setRows(gameInfo.rows)
         setCurrRowId(gameInfo.rowId)
-        tileStatus = gameInfo.tileStatus
+        setTileStatus(gameInfo.tileStatus)
         setGameStatus(gameInfo.gameStatus)
       }
     } else {
@@ -82,7 +87,9 @@ export default function Game({
         setCurrWord((prev) => prev + event.key.toUpperCase())
       } else if (event.key === 'Enter' && currWord.length === maxWordLength) {
         const verify = async () => {
-          const status = await guessVerification(currWord)
+          const status = await guessVerification(currWord, tileStatus)
+          // XXXX ... ?
+          setTileStatus(status.tileStatus)
           if (!status.wordExists) {
             toast.error("Word doesn't exist")
           } else if (status.error) {
