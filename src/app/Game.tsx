@@ -4,6 +4,8 @@ import Row from './_components/Row'
 import { useState, useEffect } from 'react'
 import { toast } from 'react-hot-toast'
 import { getErrorMessage } from './_utils/getErrorMessage'
+import { letterStatusProps, guessVerificationProps } from './page'
+import KeyboardContextProvider from './_hooks/KeyboardContextProvider'
 
 export const maxWordLength = 5
 
@@ -14,13 +16,9 @@ export default function Game({
   setSolution: () => Promise<unknown>
   guessVerification: (
     guess: string,
-    tileStatus: string[][]
-  ) => Promise<{
-    victory: boolean
-    wordExists: boolean
-    tileStatus: string[][]
-    error?: unknown
-  }>
+    tileStatus: string[][],
+    letterStatus: letterStatusProps
+  ) => Promise<guessVerificationProps>
 }) {
   const [rows, setRows] = useState<(string | null)[]>(
     Array(6)
@@ -33,6 +31,11 @@ export default function Game({
   const [currRowId, setCurrRowId] = useState<number>(0)
   const [currWord, setCurrWord] = useState<string>('')
   const [gameStatus, setGameStatus] = useState<string>('inProgress')
+  const [letterStatus, setLetterStatus] = useState<letterStatusProps>({
+    used: [],
+    noticed: [],
+    confirmed: [],
+  })
 
   useEffect(() => {
     setSolution()
@@ -87,8 +90,12 @@ export default function Game({
         setCurrWord((prev) => prev + event.key.toUpperCase())
       } else if (event.key === 'Enter' && currWord.length === maxWordLength) {
         const verify = async () => {
-          const status = await guessVerification(currWord, tileStatus)
-          // XXXX ... ?
+          const status = await guessVerification(
+            currWord,
+            tileStatus,
+            letterStatus
+          )
+          setLetterStatus(status.letterStatus)
           setTileStatus(status.tileStatus)
           if (!status.wordExists) {
             toast.error("Word doesn't exist")
@@ -137,7 +144,9 @@ export default function Game({
             )
           })}
         </div>
-        <Keyboard />
+        <KeyboardContextProvider value={letterStatus}>
+          <Keyboard />
+        </KeyboardContextProvider>
       </div>
     </>
   )

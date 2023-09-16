@@ -1,7 +1,6 @@
 import Game from './Game'
 import supabase from '../../database/supabase'
 import { revalidatePath } from 'next/cache'
-import KeyboardContextProvider from './_hooks/KeyboardContextProvider'
 
 export interface letterStatusProps {
   used: string[]
@@ -9,14 +8,17 @@ export interface letterStatusProps {
   confirmed: string[]
 }
 
+export interface guessVerificationProps {
+  victory: boolean
+  wordExists: boolean
+  tileStatus: string[][]
+  letterStatus: letterStatusProps
+  error?: unknown
+}
+
 let solution: string
 
 export default function GameWrapper() {
-  const letterStatus: letterStatusProps = {
-    used: [],
-    noticed: [],
-    confirmed: [],
-  }
   const setSolution = async () => {
     'use server'
     const generateNumber = (): number => {
@@ -45,16 +47,21 @@ export default function GameWrapper() {
     revalidatePath('/game')
   }
 
-  const guessVerification = async (guess: string, tileStatus: string[][]) => {
+  const guessVerification = async (
+    guess: string,
+    tileStatus: string[][],
+    letterStatus: letterStatusProps
+  ) => {
     'use server'
 
     const tempTileStatus = [...tileStatus]
-    const status: {
-      victory: boolean
-      wordExists: boolean
-      tileStatus: string[][]
-      error?: unknown
-    } = { victory: false, wordExists: true, tileStatus: tempTileStatus }
+    const tempLetterStatus = letterStatus
+    const status: guessVerificationProps = {
+      victory: false,
+      wordExists: true,
+      tileStatus: tempTileStatus,
+      letterStatus: tempLetterStatus,
+    }
 
     try {
       const { data } = await supabase
@@ -79,13 +86,13 @@ export default function GameWrapper() {
     }
     guess.split('').forEach((letter, id) => {
       if (letter === solution[id]) {
-        letterStatus.confirmed.push(letter)
+        tempLetterStatus.confirmed.push(letter)
         tempTileStatus[currIndex][id] = 'confirmed'
       } else if (solution.includes(letter)) {
-        letterStatus.noticed.push(letter)
+        tempLetterStatus.noticed.push(letter)
         tempTileStatus[currIndex][id] = 'noticed'
       } else {
-        letterStatus.used.push(letter)
+        tempLetterStatus.used.push(letter)
         tempTileStatus[currIndex][id] = 'secondary'
       }
     })
@@ -97,8 +104,6 @@ export default function GameWrapper() {
   }
 
   return (
-    <KeyboardContextProvider value={letterStatus}>
-      <Game setSolution={setSolution} guessVerification={guessVerification} />
-    </KeyboardContextProvider>
+    <Game setSolution={setSolution} guessVerification={guessVerification} />
   )
 }
